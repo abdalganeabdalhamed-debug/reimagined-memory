@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة الإبداع والجبال UI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --accent-color: #38bdf8;
+      --accent-gradient: linear-gradient(135deg, #0284c7, #6366f1, #a855f7);
+      --text-main: #f8fafc;
+      --text-muted: #cbd5e1;
+      --code-bg: #030712;
+      --border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      transition: all 0.25s ease;
+    }
+
+    /* خلفية الجبال والهدوء */
+    body {
+      background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.85)),
+                  url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+      color: var(--text-main);
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* الهيدر */
+    header {
+      text-align: center;
+      margin: 20px 0 35px;
+    }
+
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* البحث والفلترة */
+    .controls {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: rgba(15, 23, 42, 0.6);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      backdrop-filter: blur(12px);
+    }
+
+    .search-box:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    }
+
+    /* الشبكة */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .preview {
+      padding: 35px 20px;
+      min-height: 160px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .info {
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--accent-color);
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .code-box {
+      display: none;
+      position: relative;
+      background: var(--code-bg);
+      padding: 15px;
+      direction: ltr;
+      text-align: left;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #38bdf8;
+    }
+
+    .code-box.show {
+      display: block;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .copy-btn:hover {
+      background: #22c55e;
+      border-color: #22c55e;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin: 0;
+      padding-top: 25px;
+    }
+
+    /* أشكال العناصر الداخلية */
+    .mountain-btn {
+      background: var(--accent-gradient);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .mountain-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 14px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      width: 100%;
+    }
+
+    .glow-input {
+      width: 100%;
+      max-width: 240px;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 2px solid #334155;
+      border-radius: 8px;
+      color: #fff;
+      outline: none;
+    }
+
+    .glow-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>مكتبة الإبداع الطبيعية 🏔️</h1>
+    <p>أكواد تصاميم برمجية جاهزة مع معاينة مباشرة وأزرار نسخ</p>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchInput" class="search-box" placeholder="ابحث عن تصميم (زر، كارت، إدخال)..." onkeyup="filterUI()">
+  </div>
+
+  <div class="grid">
+    <!-- عنصر 1 -->
+    <div class="card" data-title="زر متدرج مضيء الجبال">
+      <div class="preview">
+        <button class="mountain-btn">زر متدرج ساحر ✨</button>
+      </div>
+      <div class="info">
+        <span>زر التدرج المضيء</span>
+        <button class="toggle-btn" onclick="toggleCode(this)">عرض الكود ◄</button>
+      </div>
+      <div class="code-box">
+        <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+        <pre><code>&lt;button class="mountain-btn"&gt;زر متدرج ساحر ✨&lt;/button&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- عنصر 2 -->
+    <div class="card" data-title="كارت زجاجي شفاف">
+      <div class="preview">
+        <div class="glass-card">
+          <h3>كارت زجاجي</h3>
+          <p>خلفية ضبابية أنيقة الشفافية</p>
+        </div>
+      </div>
+      <div class="info">
+        <span>كارت Glassmorphism</span>
+        <button class="toggle-btn" onclick="toggleCode(this)">عرض الكود ◄</button>
+      </div>
+      <div class="code-box">
+        <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+        <pre><code>&lt;div class="glass-card"&gt;
+  &lt;h3&gt;كارت زجاجي&lt;/h3&gt;
+  &lt;p&gt;خلفية ضبابية أنيقة الشفافية&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </div>
+
+    <!-- عنصر 3 -->
+    <div class="card" data-title="حقل إدخال متفاعل مضيء">
+      <div class="preview">
+        <input type="text" class="glow-input" placeholder="اكتب هنا...">
+      </div>
+      <div class="info">
+        <span>حقل إدخال متفاعل</span>
+        <button class="toggle-btn" onclick="toggleCode(this)">عرض الكود ◄</button>
+      </div>
+      <div class="code-box">
+        <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+        <pre><code>&lt;input type="text" class="glow-input" placeholder="اكتب هنا..."&gt;</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const oldText = btn.innerText;
+        btn.innerText = 'تم النسخ! ✓';
+        btn.style.background = '#22c55e';
+        setTimeout(() => {
+          btn.innerText = oldText;
+          btn.style.background = 'rgba(255, 255, 255, 0.15)';
+        }, 2000);
+      });
+    }
+
+    function toggleCode(btn) {
+      const codeBox = btn.parentElement.nextElementSibling;
+      codeBox.classList.toggle('show');
+      btn.innerText = codeBox.classList.contains('show') ? 'إخفاء الكود ▼' : 'عرض الكود ◄';
+    }
+
+    function filterUI() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        card.style.display = title.includes(input) ? 'flex' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
